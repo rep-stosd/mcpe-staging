@@ -297,19 +297,22 @@ void Gui::render(float f, bool bHaveScreen, int mouseX, int mouseY)
 			b1 = player->m_invulnerableTime / 3 % 2;
 			emptyHeartX += 9 * b1;
 		}
-#if defined(ANDROID) || defined(TARGET_OS_IPHONE)
+
 		//@NOTE: Pocket-style health UI.
 		int heartX = 2;
 		int heartYStart = 2;
-#else
-		// @NOTE: At the default scale, this would go off screen.
-		int heartX = cenX - 191; // why?
-		int heartYStart = height - 10;
 
-		//@NOTE: Alpha-style health UI. I'll probably remove this on release.
-		heartX = cenX - 91;
-		heartYStart = height - 32;
-#endif
+		
+		// @NOTE: At the default scale, this would go off screen.
+		//int heartX = cenX - 191; // why?
+		//int heartYStart = height - 10;
+
+		if (!m_bUsePocketUI) {
+			//@NOTE: Alpha-style health UI. I'll probably remove this on release.
+			heartX = cenX - 91;
+			heartYStart = height - 32;
+		}
+
 		int playerHealth = player->m_health;
 
 		for (int healthNo = 1; healthNo <= C_MAX_MOB_HEALTH; healthNo += 2)
@@ -342,17 +345,17 @@ void Gui::render(float f, bool bHaveScreen, int mouseX, int mouseY)
 			int breathRaw = player->m_airCapacity;
 			int breathFull  = int(ceilf((float(breathRaw - 2) * 10.0f) / 300.0f));
 			int breathMeter = int(ceilf((float(breathRaw)     * 10.0f) / 300.0f)) - breathFull;
-#if defined(ANDROID) || defined(TARGET_OS_IPHONE)
+		
 			// pe
 			int bubbleX = 2;
 			int bubbleY = 12;
-#else
-			int bubbleX = cenX - 191;
-			int bubbleY = height - 19;
 
-			bubbleX = cenX - 91;
-			bubbleY = height - 41;
-#endif
+		//	int bubbleX = cenX - 191;
+		//	int bubbleY = height - 19;
+			if (!m_bUsePocketUI) {
+				bubbleX = cenX - 91;
+				bubbleY = height - 41;
+			}
 			//@NOTE: Not sure this works as it should
 
 			for (int bubbleNo = 0; bubbleNo < breathFull + breathMeter; bubbleNo++)

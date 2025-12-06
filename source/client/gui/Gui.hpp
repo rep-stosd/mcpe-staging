@@ -75,5 +75,6 @@ public:
 	RenderChunk m_renderChunk;
 	bool field_A3C;
 	bool m_bRenderMessages;
+	bool m_bUsePocketUI;
 };
 
