@@ -9,9 +9,8 @@
 #pragma once
 
 #include "../Screen.hpp"
-//#include "../components/ImageButton.hpp"
+#include "../components/ImageButton.hpp"
 #include "../components/RecipeList.hpp"
-
 
 class PaneCraftingScreen : public Screen
 {
@@ -28,11 +27,8 @@ public:
 private:
 	//int field_3C;
 	int field_40;
-	Button m_btnBack;
-	Button m_btnCategory1;
-	Button m_btnCategory2;
-	Button m_btnCategory3;
-	Button m_btnCategory4;
+	ImageButton m_btnBack;
+	ImageButton m_btnCategory[4];
 	RecipeList* m_pRecipeList;
 };
 

@@ -11,15 +11,16 @@
 #include "server/ServerSideNetworkHandler.hpp"
 #include "client/app/Minecraft.hpp"
 
+ImageDef btndddef = {
+    120, 0, 36, 36, 0, 0,
+    156, 0, 36, 36, 0, 0,
+    "gui/spritesheet.png"
+};
 
 PaneCraftingScreen::PaneCraftingScreen() :
 	//field_3C(0),
 	field_40(0),	
-	m_btnBack(0, "X"),
-	m_btnCategory1(6, "Blocks"),
-	m_btnCategory2(7, "Tools"),
-	m_btnCategory3(8, "Armor"),
-	m_btnCategory4(9, "Decor")
+	m_btnBack(0, "", btndddef)
 {
 
 }
@@ -52,35 +53,68 @@ void PaneCraftingScreen::init()
 	// add the buttons to the screen:
 	m_buttons.push_back(&m_btnBack);
 
+	// make xcode happy
+	ImageDef
+	sprite0 = {
+		0, 128, 64, 64, 0, 0,
+		0, 128, 64, 64, 0, 0,
+		"gui/spritesheet.png"
+	},
+	sprite1 = {
+		0, 192, 64, 64, 0, 0,
+		0, 192, 64, 64, 0, 0,
+		"gui/spritesheet.png"
+	},
+	sprite2 = {
+		64, 128, 64, 64, 0, 0,
+		64, 128, 64, 64, 0, 0,
+		"gui/spritesheet.png"
+	},
+	sprite3 = {
+		64, 192, 64, 64, 0, 0,
+		64, 192, 64, 64, 0, 0,
+		"gui/spritesheet.png"
+	};
+
+	m_btnCategory[0] = ImageButton(6, "", sprite0);
+	m_btnCategory[1] = ImageButton(7, "", sprite1);
+	m_btnCategory[2] = ImageButton(8, "", sprite2);
+	m_btnCategory[3] = ImageButton(9, "", sprite3);
+
 
 	int btnsWidth = (54.f / 240) * m_height, btnsSpacing = (2.f / 240) * m_height;
-	m_btnCategory1.m_yPos = 9.f / 240 * m_height;
-	m_btnCategory1.field_36 = true;
+	m_btnCategory[0].m_yPos = 9.f / 240 * m_height;
+	m_btnCategory[0].field_36 = true;
 
 
-	m_btnCategory1.m_xPos = 10.f / 240 * m_height;
-	m_btnCategory2.m_xPos = 10.f / 240 * m_height;
-	m_btnCategory3.m_xPos = 10.f / 240 * m_height;
-	m_btnCategory4.m_xPos = 10.f / 240 * m_height;
+	m_btnCategory[0].m_xPos = 10.f / 240 * m_height;
+	m_btnCategory[1].m_xPos = 10.f / 240 * m_height;
+	m_btnCategory[2].m_xPos = 10.f / 240 * m_height;
+	m_btnCategory[3].m_xPos = 10.f / 240 * m_height;
 
-	m_btnCategory1.m_width = m_btnCategory1.m_height = btnsWidth;
-	m_btnCategory2.m_width = m_btnCategory2.m_height = btnsWidth;
-	m_btnCategory3.m_width = m_btnCategory3.m_height = btnsWidth;
-	m_btnCategory4.m_width = m_btnCategory4.m_height = btnsWidth;
+	m_btnCategory[0].m_width = m_btnCategory[0].m_height = btnsWidth;
+	m_btnCategory[1].m_width = m_btnCategory[1].m_height = btnsWidth;
+	m_btnCategory[2].m_width = m_btnCategory[2].m_height = btnsWidth;
+	m_btnCategory[3].m_width = m_btnCategory[3].m_height = btnsWidth;
 
-	m_btnCategory2.m_yPos = m_btnCategory1.m_yPos + m_btnCategory1.m_height + btnsSpacing;
-	m_btnCategory3.m_yPos = m_btnCategory2.m_yPos + m_btnCategory1.m_height + btnsSpacing;
-	m_btnCategory4.m_yPos = m_btnCategory3.m_yPos + m_btnCategory1.m_height + btnsSpacing;
+	m_btnCategory[1].m_yPos = m_btnCategory[0].m_yPos + m_btnCategory[0].m_height + btnsSpacing;
+	m_btnCategory[2].m_yPos = m_btnCategory[1].m_yPos + m_btnCategory[0].m_height + btnsSpacing;
+	m_btnCategory[3].m_yPos = m_btnCategory[2].m_yPos + m_btnCategory[0].m_height + btnsSpacing;
 
-	m_buttons.push_back(&m_btnCategory1);
-	m_buttons.push_back(&m_btnCategory2);
-	m_buttons.push_back(&m_btnCategory3);
-	m_buttons.push_back(&m_btnCategory4);
+	m_btnCategory[0].m_bHoverable = false;
+	m_btnCategory[1].m_bHoverable = false;
+	m_btnCategory[2].m_bHoverable = false;
+	m_btnCategory[3].m_bHoverable = false;
+
+	m_buttons.push_back(&m_btnCategory[0]);
+	m_buttons.push_back(&m_btnCategory[1]);
+	m_buttons.push_back(&m_btnCategory[2]);
+	m_buttons.push_back(&m_btnCategory[3]);
 	
 	for (int i = 0; i < int(m_buttons.size()); i++)
 		m_buttonTabList.push_back(m_buttons[i]);
 
-	m_pRecipeList = new RecipeList(m_pMinecraft, m_btnCategory1.m_xPos+m_btnCategory1.m_xPos+btnsWidth, m_height, 24, m_height - 30, 28);//();
+	m_pRecipeList = new RecipeList(m_pMinecraft, m_btnCategory[0].m_xPos+m_btnCategory[0].m_xPos+btnsWidth, m_height, 24, m_height - 30, 28);//();
 
 }
 
@@ -137,10 +171,10 @@ void PaneCraftingScreen::buttonClicked(Button* pButton)
 	if (pButton->m_buttonId == m_btnBack.m_buttonId)
 		m_pMinecraft->setScreen(nullptr);
 
-	for (int i = 1; i < 5; i++) {
-		m_buttons[i]->field_36 = false;
-		if (pButton->m_buttonId == m_buttons[i]->m_buttonId) {
-			m_buttons[i]->field_36 = true;
+	for (int i = 0; i < 4; i++) {
+		m_btnCategory[i].field_36 = false;
+		if (pButton->m_buttonId == m_btnCategory[i].m_buttonId) {
+			m_btnCategory[i].field_36 = true;
 		}
 	}
 }

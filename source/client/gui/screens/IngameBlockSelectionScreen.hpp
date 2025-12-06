@@ -40,5 +40,6 @@ private:
 	int m_selectedSlot;
     Button m_btnPause;
 	Button m_btnChat;
+	Button m_btnCraft;
 };
 

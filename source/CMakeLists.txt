@@ -76,6 +76,7 @@ add_library(reminecraftpe-core STATIC
     client/gui/screens/DisconnectionScreen.cpp
     client/gui/screens/SelectWorldScreen.cpp
     client/gui/screens/SavingWorldScreen.cpp
+    client/gui/screens/PaneCraftingScreen.cpp
     client/gui/screens/InvalidLicenseScreen.cpp
     client/gui/screens/ConfirmScreen.cpp
     client/gui/screens/DeleteWorldScreen.cpp
@@ -90,6 +91,7 @@ add_library(reminecraftpe-core STATIC
     client/gui/components/ScrolledSelectionList.cpp
     client/gui/components/AvailableGamesList.cpp
     client/gui/components/RolledSelectionList.cpp
+    client/gui/components/RecipeList.cpp
     client/gui/components/Button.cpp
     client/gui/components/TextInputBox.cpp
     client/gui/components/SmallButton.cpp
