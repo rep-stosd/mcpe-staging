@@ -438,25 +438,51 @@ void StartMenuScreen::buttonClicked(Button* pButton)
 
 void StartMenuScreen::init()
 {
-	int yPos = m_height / 2;
+	if (m_pMinecraft->getOptions()->m_bPocketUI) {
+		m_startButton.m_width   = m_startButton.m_height   = 75;
+		m_optionsButton.m_width = m_optionsButton.m_height = 75;
+		m_joinButton.m_width    = m_joinButton.m_height    = 75;
 
-	m_joinButton.m_yPos = yPos + 25;
-	m_startButton.m_yPos = yPos - 3;
 
-	yPos += 55;
+		int x1 = (m_width - m_joinButton.m_width) / 2;
+		int x2 = (x1 - m_joinButton.m_width) / 2;
+		m_startButton.m_xPos   = x1;
+		m_joinButton.m_xPos    = x2;
+		m_optionsButton.m_xPos = m_width - x2 - m_joinButton.m_width;
 
-	m_optionsButton.m_yPos = yPos;
-	m_testButton.m_yPos = yPos;
-	m_buyButton.m_yPos = yPos;
+		int yPos = m_height / 3;
+		m_startButton.m_yPos = yPos;
+		m_joinButton.m_yPos = yPos;
+		m_optionsButton.m_yPos = yPos;
 
-	m_startButton.m_xPos = (m_width - m_startButton.m_width) / 2;
+#if defined(DEMO) || defined(CAN_QUIT)
+		m_buyButton.m_xPos = (m_width - m_buyButton.m_width) / 2;
+		m_buyButton.m_yPos = m_height - m_buyButton.m_height - (28 - m_buyButton.m_height) / 2;
+#endif
+	}
+	else {
+		int yPos = m_height / 2;
 
-	int x1 = m_width - m_joinButton.m_width;
+		m_joinButton.m_yPos = yPos + 25;
+		m_startButton.m_yPos = yPos - 3;
 
-	m_joinButton.m_xPos = x1 / 2;
-	m_optionsButton.m_xPos = x1 / 2;
-	m_buyButton.m_xPos = x1 / 2 + m_optionsButton.m_width + 4;
-	m_testButton.m_xPos = x1 / 2 + m_optionsButton.m_width + 4;
+		yPos += 55;
+
+		// test button is obsolete
+		//m_testButton.m_yPos = yPos;
+		//m_testButton.m_xPos = x1 / 2 + m_optionsButton.m_width + 4;
+
+		m_optionsButton.m_yPos = yPos;
+		m_buyButton.m_yPos = yPos;
+
+		m_startButton.m_xPos = (m_width - m_startButton.m_width) / 2;
+
+		int x1 = m_width - m_joinButton.m_width;
+
+		m_joinButton.m_xPos = x1 / 2;
+		m_optionsButton.m_xPos = x1 / 2;
+		m_buyButton.m_xPos = x1 / 2 + m_optionsButton.m_width + 4;
+	}
 
 	// add the buttons to the screen:
 	m_buttons.push_back(&m_startButton);
@@ -498,9 +524,9 @@ void StartMenuScreen::drawLegacyTitle()
 	Textures* tx = m_pMinecraft->m_pTextures;
 
 	bool crampedMode = false;
-	//int titleYPos = 4;
+	int titleYPos = 4;
 	//int titleYPos = 30; // -- MC Java position
-	int titleYPos = 15;
+	//int titleYPos = 15;
 
 	int id = tx->loadTexture("gui/title.png", true);
 	Texture* pTex = tx->getTemporaryTextureData(id);
@@ -570,6 +596,29 @@ void StartMenuScreen::render(int a, int b, float c)
 #endif
 
 	Screen::render(a, b, c);
+
+	if (m_pMinecraft->getOptions()->m_bPocketUI) {
+		Textures* pTexs = m_pMinecraft->m_pTextures;
+
+		pTexs->loadAndBindTexture("gui/touchgui.png");
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+		int xOff = m_joinButton.field_36 * 75;
+		blit(m_joinButton.m_xPos, m_joinButton.m_yPos, xOff, 177, m_joinButton.m_width, m_joinButton.m_height, 75, 75);
+
+		xOff = m_startButton.field_36 * 75;
+		blit(m_startButton.m_xPos, m_startButton.m_yPos, xOff, 102, m_startButton.m_width, m_startButton.m_height, 75, 75);
+		
+		xOff = m_optionsButton.field_36 * 75;
+		blit(m_optionsButton.m_xPos, m_optionsButton.m_yPos, xOff, 27, m_optionsButton.m_width, m_optionsButton.m_height, 75, 75);
+	
+		xOff = m_joinButton.m_width/2;
+
+		drawCenteredString(m_pFont, m_joinButton.m_text, m_joinButton.m_xPos + xOff, m_joinButton.m_yPos+10, 0x00FFFFFF);
+		drawCenteredString(m_pFont, m_startButton.m_text, m_startButton.m_xPos + xOff, m_startButton.m_yPos+10, 0x00FFFFFF);
+		drawCenteredString(m_pFont, m_optionsButton.m_text, m_optionsButton.m_xPos + xOff, m_optionsButton.m_yPos+10, 0x00FFFFFF);
+	
+	}
 }
 
 void StartMenuScreen::tick()
