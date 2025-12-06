@@ -14,6 +14,7 @@
 CreateWorldScreen::CreateWorldScreen() :
 	m_textName(this, 1, 0, 0, 0, 0, "", "Unnamed world"),
 	m_textSeed(this, 2, 0, 0, 0, 0, ""),
+	m_btnGameType(5, "Game Type"),
 	m_btnBack(3, "Cancel"),
 	m_btnCreate(4, "Create New World")
 {
@@ -29,18 +30,20 @@ void CreateWorldScreen::init()
 	m_textName.m_yPos = 60;
 	m_textSeed.m_yPos = 100;
 
+	m_btnGameType.m_yPos  = 140;
 	m_btnCreate.m_yPos  = m_height - 56;
 	m_btnBack.m_yPos    = m_height - 30;
-	m_btnBack.m_width   = m_btnCreate.m_width  = 200;
-	m_btnBack.m_height  = m_btnCreate.m_height = 20;
+	m_btnBack.m_width   = m_btnCreate.m_width  = m_btnGameType.m_width   = 200;
+	m_btnBack.m_height  = m_btnCreate.m_height = m_btnGameType.m_height  = 20;
 	
-	m_btnBack.m_xPos   = m_width / 2 - 200 / 2;
-	m_btnCreate.m_xPos = m_width / 2 - 200 / 2;
+	m_btnBack.m_xPos    = m_btnCreate.m_xPos   = m_btnGameType.m_xPos = m_width / 2 - 200 / 2;
 
 	m_textInputs.push_back(&m_textName);
 	m_textInputs.push_back(&m_textSeed);
+	m_buttons.push_back(&m_btnGameType);
 	m_buttons.push_back(&m_btnBack);
 	m_buttons.push_back(&m_btnCreate);
+	m_buttonTabList.push_back(&m_btnGameType);
 	m_buttonTabList.push_back(&m_btnBack);
 	m_buttonTabList.push_back(&m_btnCreate);
 	m_textName.init(m_pFont);
@@ -95,8 +98,7 @@ void CreateWorldScreen::buttonClicked(Button* pButton)
 	{
 		m_pMinecraft->setScreen(new SelectWorldScreen);
 	}
-
-	if (pButton->m_buttonId == m_btnCreate.m_buttonId)
+	else if (pButton->m_buttonId == m_btnCreate.m_buttonId)
 	{
 		std::string nameStr = m_textName.getText();
 		std::string seedStr = m_textSeed.getText();
@@ -125,13 +127,22 @@ void CreateWorldScreen::buttonClicked(Button* pButton)
 				seed = Util::hashCode(seedThing);
 		}
 
-		LevelSettings levelSettings(seed);
+		LevelSettings levelSettings(seed, (GameType)m_selectedGameType);
 		m_pMinecraft->selectLevel(levelUniqueName, levelNickname, levelSettings);
 	}
+	else if (pButton->m_buttonId == m_btnGameType.m_buttonId)
+	{
+		m_selectedGameType = (m_selectedGameType + 1) % (GAME_TYPES_MAX + 1);
+	}
+
 }
 
 void CreateWorldScreen::render(int mouseX, int mouseY, float f)
 {
+	const GameType gameType = (GameType)m_selectedGameType;
+	const std::string gameTypeStr = GameTypeConv::GameTypeDescriptionToNonLocString(gameType);
+	m_btnGameType.m_text = GameTypeConv::GameTypeToNonLocString(gameType);
+
 	renderBackground();
 	Screen::render(mouseX, mouseY, f);
 
@@ -139,4 +150,6 @@ void CreateWorldScreen::render(int mouseX, int mouseY, float f)
 	drawString(m_pFont, "World name",                    m_textName.m_xPos, m_textName.m_yPos - 10, 0xDDDDDD);
 	drawString(m_pFont, "Seed for the World Generator",  m_textSeed.m_xPos, m_textSeed.m_yPos - 10, 0xDDDDDD);
 	drawString(m_pFont, "Leave blank for a random seed", m_textSeed.m_xPos, m_textSeed.m_yPos + 22, 0x999999);
+
+	drawString(m_pFont, gameTypeStr.c_str(), m_btnGameType.m_xPos, m_btnGameType.m_yPos + 22, 0x999999);
 }

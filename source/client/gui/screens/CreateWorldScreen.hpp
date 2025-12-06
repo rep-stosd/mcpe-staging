@@ -21,11 +21,16 @@ public:
 	void buttonClicked(Button* pButton) override;
 	void render(int mouseX, int mouseY, float f) override;
 
+
 public:
 	TextInputBox m_textName;
 	TextInputBox m_textSeed;
+	Button m_btnGameType;
 	Button m_btnBack;
 	Button m_btnCreate;
+
+	int m_selectedGameType = 0;
+	
 };
 
 #endif
