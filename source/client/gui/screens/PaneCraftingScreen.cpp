@@ -8,6 +8,7 @@
 
 #include "PaneCraftingScreen.hpp"
 #include "OptionsScreen.hpp"
+#include "IngameBlockSelectionScreen.hpp"
 #include "server/ServerSideNetworkHandler.hpp"
 #include "client/app/Minecraft.hpp"
 
@@ -92,7 +93,7 @@ void PaneCraftingScreen::init()
 	for (int i = 0; i < int(m_buttons.size()); i++)
 		m_buttonTabList.push_back(m_buttons[i]);
 
-	m_pRecipeList = new RecipeList(m_pMinecraft, m_btnCategory1.m_xPos*2+btnsWidth, m_height, 24, m_height - 30, 28);//();
+	m_pRecipeList = new RecipeList(m_pMinecraft, m_btnCategory1.m_xPos*1.5+btnsWidth, m_height, 24, m_height - 30, 24);//();
 
 }
 
@@ -146,7 +147,7 @@ void PaneCraftingScreen::render(int a, int b, float c)
 void PaneCraftingScreen::buttonClicked(Button* pButton)
 {
 	if (pButton->m_buttonId == m_btnBack.m_buttonId)
-		m_pMinecraft->setScreen(nullptr);
+		m_pMinecraft->setScreen(new IngameBlockSelectionScreen);
 
 	for (int i = 1; i < 5; i++) {
 		m_buttons[i]->field_36 = false;

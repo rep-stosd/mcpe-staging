@@ -33,8 +33,15 @@ void RecipeList::renderItem(int idx, int x, int y, int width, Tesselator& t)
  //   drawString(m_pMinecraft->m_pFont, std::string(m_recipe[idx].m_name.C_String()),    x, y + 2,  0xFFFFA0);
  //   drawString(m_pMinecraft->m_pFont, std::string(m_recipe[idx].m_address.ToString()), x, y + 16, 0xFFFFA0);
 
- 	m_pMinecraft->m_pFont->draw("This has been touched since february", x+1, y + 9, 0xa5a1a0);
- 	m_pMinecraft->m_pFont->draw("This has been touched since february", x, y + 8, 0x6c5f60);
+ 	m_pMinecraft->m_pFont->draw("Grass", 4+x+1, y + 9, 0xa5a1a0);
+ 	m_pMinecraft->m_pFont->draw("Grass", 4+x, y + 8, 0x6c5f60);
+
+	glDisable(GL_DEPTH_TEST);
+
+	ItemInstance inst(Tile::grass->m_ID, 1, 0);
+	ItemRenderer::renderGuiItem(m_pMinecraft->m_pFont, m_pMinecraft->m_pTextures, &inst, width - 18, y+5, true);
+
+	glEnable(GL_DEPTH_TEST);
 }
 
 void RecipeList::selectItem(int index, bool b)
@@ -47,12 +54,12 @@ void RecipeList::render(int mouseX, int mouseY, float f)
 {
 	renderBackground(0);
 
-    int C_ITEM_WIDTH = Minecraft::width * Gui::InvGuiScale - field_18 - 0.75f*Minecraft::height* Gui::InvGuiScale;
+    int C_ITEM_WIDTH = Minecraft::width * Gui::InvGuiScale - field_18 - 0.75f*Minecraft::height* Gui::InvGuiScale + 5;
 
 	int nItems = getNumberOfItems();
 	Tesselator& t = Tesselator::instance;
 
-    if (!(mouseX < field_18 || mouseX > field_18 + C_ITEM_WIDTH))
+    if (!(mouseX < field_18 || mouseX > 2*field_18 + C_ITEM_WIDTH))
 	    checkInput(mouseX, mouseY);
 
 	field_30 = float(mouseY);
@@ -104,7 +111,7 @@ void RecipeList::render(int mouseX, int mouseY, float f)
             blit(field_18, itemY+thick/2, 44, 68, field_18+C_ITEM_WIDTH, m_itemHeight-thick, 10,  8);
         }
 
-		renderItem(i, itemX, int(itemY), int(m_itemHeight - 4.0f), t);
+		renderItem(i, itemX, int(itemY), 2*field_18+C_ITEM_WIDTH, t);
 	}
 	
 	glDisable(GL_SCISSOR_TEST);
