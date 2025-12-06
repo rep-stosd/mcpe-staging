@@ -33,6 +33,7 @@ private:
 	Button m_btnCategory2;
 	Button m_btnCategory3;
 	Button m_btnCategory4;
+	Button m_btnCraft;
 	RecipeList* m_pRecipeList;
 };
 

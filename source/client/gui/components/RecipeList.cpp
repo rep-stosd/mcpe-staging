@@ -8,7 +8,6 @@
 
 #include "RecipeList.hpp"
 
-#define C_ITEM_WIDTH 110
 
 RecipeList::RecipeList(Minecraft* a, int b, int c, int d, int e, int f) :
     ScrolledSelectionList(a, b, c, d, e, f)
@@ -34,7 +33,8 @@ void RecipeList::renderItem(int idx, int x, int y, int width, Tesselator& t)
  //   drawString(m_pMinecraft->m_pFont, std::string(m_recipe[idx].m_name.C_String()),    x, y + 2,  0xFFFFA0);
  //   drawString(m_pMinecraft->m_pFont, std::string(m_recipe[idx].m_address.ToString()), x, y + 16, 0xFFFFA0);
 
- drawString(m_pMinecraft->m_pFont, "Super awesome scroller item", x, y + 16, 0xFFFFA0);
+ 	m_pMinecraft->m_pFont->draw("This has been touched since february", x+1, y + 9, 0xa5a1a0);
+ 	m_pMinecraft->m_pFont->draw("This has been touched since february", x, y + 8, 0x6c5f60);
 }
 
 void RecipeList::selectItem(int index, bool b)
@@ -47,7 +47,7 @@ void RecipeList::render(int mouseX, int mouseY, float f)
 {
 	renderBackground(0);
 
-        
+    int C_ITEM_WIDTH = Minecraft::width * Gui::InvGuiScale - field_18 - 0.75f*Minecraft::height* Gui::InvGuiScale;
 
 	int nItems = getNumberOfItems();
 	Tesselator& t = Tesselator::instance;
@@ -91,20 +91,9 @@ void RecipeList::render(int mouseX, int mouseY, float f)
 
         m_pMinecraft->m_pTextures->loadAndBindTexture("gui/spritesheet.png");
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-        int thick = 14;
+        int thick = 10;
 		if (m_bRenderSelection && isSelectedItem(i))
 		{
-		//	glDisable(GL_TEXTURE_2D);
-		//	t.begin();
-		//	t.color(0x808080);
-		//	t.vertexUV(field_18, lowerY + 2.0f, 0.0f, 0.0f, 1.0f);
-		//	t.vertexUV(field_18, lowerY + 2.0f, 0.0f, 1.0f, 1.0f);
-		//	t.vertexUV(field_18, itemY  - 2.0f, 0.0f, 1.0f, 0.0f);
-		//	t.vertexUV(field_18, itemY  - 2.0f, 0.0f, 0.0f, 0.0f);
-		//	t.draw();
-		//	glEnable(GL_TEXTURE_2D);
-          //  blit(field_18, itemY, 60, 64, field_18+C_ITEM_WIDTH, m_itemHeight, 10,  16); fullsz
-
             blit(field_18, itemY, 60, 64, field_18+C_ITEM_WIDTH, thick, 10,  16);
             blit(field_18, itemY+m_itemHeight-thick, 60, 64, field_18+C_ITEM_WIDTH, thick, 10,  16);
             blit(field_18, itemY+thick/2, 60, 68, field_18+C_ITEM_WIDTH, m_itemHeight-thick, 10,  8);

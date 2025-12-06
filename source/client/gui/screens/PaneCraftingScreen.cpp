@@ -19,7 +19,8 @@ PaneCraftingScreen::PaneCraftingScreen() :
 	m_btnCategory1(6, "Blocks"),
 	m_btnCategory2(7, "Tools"),
 	m_btnCategory3(8, "Armor"),
-	m_btnCategory4(9, "Decor")
+	m_btnCategory4(9, "Decor"),
+	m_btnCraft(50, "CraftButton")
 {
 
 }
@@ -72,15 +73,26 @@ void PaneCraftingScreen::init()
 	m_btnCategory3.m_yPos = m_btnCategory2.m_yPos + m_btnCategory1.m_height + btnsSpacing;
 	m_btnCategory4.m_yPos = m_btnCategory3.m_yPos + m_btnCategory1.m_height + btnsSpacing;
 
+	int C_ITEM_WIDTH = m_btnCategory1.m_xPos*2+btnsWidth + Minecraft::width * Gui::InvGuiScale - 0.75f*Minecraft::height* Gui::InvGuiScale;
+
+
+	m_btnCraft.m_width = Minecraft::width * Gui::InvGuiScale - C_ITEM_WIDTH - 12;
+	m_btnCraft.m_height = btnsWidth*1.25f;
+	m_btnCraft.m_xPos = C_ITEM_WIDTH + 5;
+	m_btnCraft.m_yPos = 21;
+
+	// order is very important here, do not rearrange
 	m_buttons.push_back(&m_btnCategory1);
 	m_buttons.push_back(&m_btnCategory2);
 	m_buttons.push_back(&m_btnCategory3);
 	m_buttons.push_back(&m_btnCategory4);
+
+	m_buttons.push_back(&m_btnCraft);
 	
 	for (int i = 0; i < int(m_buttons.size()); i++)
 		m_buttonTabList.push_back(m_buttons[i]);
 
-	m_pRecipeList = new RecipeList(m_pMinecraft, m_btnCategory1.m_xPos+m_btnCategory1.m_xPos+btnsWidth, m_height, 24, m_height - 30, 28);//();
+	m_pRecipeList = new RecipeList(m_pMinecraft, m_btnCategory1.m_xPos*2+btnsWidth, m_height, 24, m_height - 30, 28);//();
 
 }
 
@@ -119,12 +131,11 @@ void PaneCraftingScreen::render(int a, int b, float c)
         blit(0, m_height-texSize, 0, 16, texSize, texSize, 16,  16);
         blit(m_width-texSize, m_height-texSize, 16, 16, texSize, texSize, 16,  16);
 
+	drawString(m_pMinecraft->m_pFont, "I18N Item description goes here", m_width - 300, 300, 0xffffff);
 
 		
 
 
-
-	drawCenteredString(m_pFont, "Crafting TEST", m_width / 2, 24, 0xFFFFFF);
 
 	m_pRecipeList->render(a,b,c);
 
