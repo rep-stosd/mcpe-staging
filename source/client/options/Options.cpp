@@ -69,6 +69,8 @@ void Options::_initDefaultValues()
 	m_bDynamicHand = false;
 	m_bOldTitleLogo = false;
 	m_bMenuPanorama = false;
+// ifdef MOD_POCKET_UI
+	m_bPocketUI = true;
 	field_19 = 1;
 
 #ifdef ORIGINAL_CODE
@@ -137,6 +139,8 @@ void Options::_load()
 			else
 				m_bBiomeColors = readBool(value);
 		}
+		else if (key == "gfx_pocketgui")
+			m_bPocketUI = readBool(value);
 		else if (key == "gfx_hidegui")
 			m_bDontRenderGui = readBool(value);
 		else if (key == "gfx_thirdperson")
@@ -278,6 +282,7 @@ std::vector<std::string> Options::getOptionStrings()
 	SO("misc_oldtitle",             saveBool(m_bOldTitleLogo));
 	SO("info_debugtext",            saveBool(m_bDebugText));
 	SO("misc_menupano",			    saveBool(m_bMenuPanorama));
+	SO("gfx_pocketgui",             saveBool(m_bPocketUI));
 
 	return vec;
 }

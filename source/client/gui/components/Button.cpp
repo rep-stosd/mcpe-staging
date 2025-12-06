@@ -82,8 +82,32 @@ void Button::released(int xPos, int yPos)
 
 }
 
-void Button::renderBg(Minecraft*, int, int)
+void Button::renderBg(Minecraft* pMinecraft, int xPos, int yPos)
 {
+	Textures* pTexs = pMinecraft->m_pTextures;
+
+	if (pMinecraft->getOptions()->m_bPocketUI) {
+		pTexs->loadAndBindTexture("gui/touchgui.png");
+
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		int iXPos = 66 * field_36;
+
+		blit(m_xPos, m_yPos, iXPos, 0, m_width / 2, m_height, 0, 26);
+		blit(m_xPos + m_width / 2, m_yPos, 66 - m_width / 2 + iXPos, 0, m_width / 2, m_height, 0, 26);
+		blit(m_xPos + 11, m_yPos, 11 + iXPos, 0, m_width - 22, m_height, 1, 26);
+
+		return;
+	}
+
+	
+
+	pTexs->loadAndBindTexture("gui/gui.png");
+
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	int iYPos = 20 * getYImage(field_36) + 46;
+
+	blit(m_xPos, m_yPos, 0, iYPos, m_width / 2, m_height, 0, 20);
+	blit(m_xPos + m_width / 2, m_yPos, 200 - m_width / 2, iYPos, m_width / 2, m_height, 0, 20);
 
 }
 
@@ -95,16 +119,6 @@ void Button::render(Minecraft* pMinecraft, int xPos, int yPos)
 		field_36 = clicked(pMinecraft, xPos, yPos);
 
 	Font* pFont = pMinecraft->m_pFont;
-	Textures* pTexs = pMinecraft->m_pTextures;
-
-	pTexs->loadAndBindTexture("gui/gui.png");
-
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	int iYPos = 20 * getYImage(field_36) + 46;
-
-	blit(m_xPos, m_yPos, 0, iYPos, m_width / 2, m_height, 0, 20);
-	blit(m_xPos + m_width / 2, m_yPos, 200 - m_width / 2, iYPos, m_width / 2, m_height, 0, 20);
-
 	renderBg(pMinecraft, xPos, yPos);
 
 	int textColor;

@@ -303,6 +303,7 @@ void OptionList::initDefaultMenu()
 		OPTION(Render,   m_bBiomeColors,          "Biome Colors");  idxBiome = currentIndex; // colors the grass based on the current biome
 		OPTION(Boolean,  m_bDontRenderGui,        "Hide GUI");
 		OPTION(Boolean,  m_bDynamicHand,          "Dynamic Hand Movement");
+		OPTION(Boolean,  m_bPocketUI,		      "Pocket GUI");
 	}
 
 	HEADER("Controls");

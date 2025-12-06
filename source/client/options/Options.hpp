@@ -129,6 +129,7 @@ public:
 	bool m_bDynamicHand;
 	bool m_bOldTitleLogo;
 	bool m_bMenuPanorama;
+	bool m_bPocketUI;
 
 public:
 	struct Option

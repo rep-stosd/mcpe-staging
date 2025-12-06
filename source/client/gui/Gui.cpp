@@ -307,7 +307,7 @@ void Gui::render(float f, bool bHaveScreen, int mouseX, int mouseY)
 		//int heartX = cenX - 191; // why?
 		//int heartYStart = height - 10;
 
-		if (!m_bUsePocketUI) {
+		if (!mc->getOptions()->m_bPocketUI) {
 			//@NOTE: Alpha-style health UI. I'll probably remove this on release.
 			heartX = cenX - 91;
 			heartYStart = height - 32;
@@ -352,7 +352,7 @@ void Gui::render(float f, bool bHaveScreen, int mouseX, int mouseY)
 
 		//	int bubbleX = cenX - 191;
 		//	int bubbleY = height - 19;
-			if (!m_bUsePocketUI) {
+			if (!mc->getOptions()->m_bPocketUI) {
 				bubbleX = cenX - 91;
 				bubbleY = height - 41;
 			}
