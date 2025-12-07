@@ -57,7 +57,7 @@ void PaneCraftingScreen::init()
 
 	int btnsWidth = (54.f / 240) * m_height, btnsSpacing = (2.f / 240) * m_height;
 	m_btnCategory1.m_yPos = 9.f / 240 * m_height;
-	m_btnCategory1.field_36 = true;
+	m_btnCategory1.m_bHovered = true;
 
 
 	m_btnCategory1.m_xPos = 10.f / 240 * m_height;
@@ -132,7 +132,7 @@ void PaneCraftingScreen::render(int a, int b, float c)
         blit(0, m_height-texSize, 0, 16, texSize, texSize, 16,  16);
         blit(m_width-texSize, m_height-texSize, 16, 16, texSize, texSize, 16,  16);
 
-	drawString(m_pMinecraft->m_pFont, "I18N Item description goes here", m_width - 300, 300, 0xffffff);
+	drawString(*m_pMinecraft->m_pFont, "I18N Item description goes here", m_width - 300, 300, 0xffffff);
 
 		
 
@@ -150,9 +150,9 @@ void PaneCraftingScreen::buttonClicked(Button* pButton)
 		m_pMinecraft->setScreen(new IngameBlockSelectionScreen);
 
 	for (int i = 1; i < 5; i++) {
-		m_buttons[i]->field_36 = false;
+		m_buttons[i]->m_bHovered = false;
 		if (pButton->m_buttonId == m_buttons[i]->m_buttonId) {
-			m_buttons[i]->field_36 = true;
+			m_buttons[i]->m_bHovered = true;
 		}
 	}
 }

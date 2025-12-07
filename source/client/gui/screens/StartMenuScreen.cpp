@@ -737,22 +737,22 @@ void StartMenuScreen::render(int a, int b, float c)
 		Textures* pTexs = m_pMinecraft->m_pTextures;
 
 		pTexs->loadAndBindTexture("gui/touchgui.png");
-		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		currentShaderColor = Color::WHITE;
 
-		int xOff = m_joinButton.field_36 * 75;
+		int xOff = m_joinButton.m_bHovered * 75;
 		blit(m_joinButton.m_xPos, m_joinButton.m_yPos, xOff, 176, m_joinButton.m_width, m_joinButton.m_height, 75, 75);
 
-		xOff = m_startButton.field_36 * 75;
+		xOff = m_startButton.m_bHovered * 75;
 		blit(m_startButton.m_xPos, m_startButton.m_yPos, xOff, 101, m_startButton.m_width, m_startButton.m_height, 75, 75);
 		
-		xOff = m_optionsButton.field_36 * 75;
+		xOff = m_optionsButton.m_bHovered * 75;
 		blit(m_optionsButton.m_xPos, m_optionsButton.m_yPos, xOff, 26, m_optionsButton.m_width, m_optionsButton.m_height, 75, 75);
 	
 		xOff = m_joinButton.m_width/2;
 
-		drawCenteredString(m_pFont, m_joinButton.m_text, m_joinButton.m_xPos + xOff, m_joinButton.m_yPos+10, 0x00FFFFFF);
-		drawCenteredString(m_pFont, m_startButton.m_text, m_startButton.m_xPos + xOff, m_startButton.m_yPos+10, 0x00FFFFFF);
-		drawCenteredString(m_pFont, m_optionsButton.m_text, m_optionsButton.m_xPos + xOff, m_optionsButton.m_yPos+10, 0x00FFFFFF);
+		drawCenteredString(*m_pFont, m_joinButton.m_text, m_joinButton.m_xPos + xOff, m_joinButton.m_yPos+10, 0x00FFFFFF);
+		drawCenteredString(*m_pFont, m_startButton.m_text, m_startButton.m_xPos + xOff, m_startButton.m_yPos+10, 0x00FFFFFF);
+		drawCenteredString(*m_pFont, m_optionsButton.m_text, m_optionsButton.m_xPos + xOff, m_optionsButton.m_yPos+10, 0x00FFFFFF);
 	
 	}
 }

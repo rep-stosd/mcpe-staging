@@ -134,7 +134,7 @@ void PaneCraftingScreen::render(int a, int b, float c)
 
 	pTexs->loadAndBindTexture("gui/spritesheet.png");
 
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		currentShaderColor = Color::WHITE;
     
 		int texSize = 12;
 		

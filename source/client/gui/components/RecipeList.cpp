@@ -39,7 +39,7 @@ void RecipeList::renderItem(int idx, int x, int y, int width, Tesselator& t)
 	glDisable(GL_DEPTH_TEST);
 
 	ItemInstance inst(Tile::grass->m_ID, 1, 0);
-	ItemRenderer::renderGuiItem(m_pMinecraft->m_pFont, m_pMinecraft->m_pTextures, &inst, width - 18, y+5, true);
+	ItemRenderer::singleton().renderGuiItem(m_pMinecraft->m_pFont, m_pMinecraft->m_pTextures, &inst, width - 18, y+5, true);
 
 	glEnable(GL_DEPTH_TEST);
 }

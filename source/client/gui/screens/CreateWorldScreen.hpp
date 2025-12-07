@@ -29,7 +29,7 @@ public:
 	Button m_btnBack;
 	Button m_btnCreate;
 
-	int m_selectedGameType = 0;
+	int m_selectedGameType;
 	
 };
 
