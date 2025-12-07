@@ -5,6 +5,12 @@ project(reminecraftpe)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
 
+if (WIN32 OR LINUX)
+set(CMAKE_CXX_STANDARD 11)
+else()
+set(CMAKE_CXX_STANDARD 98)
+endif()
+
 # WASM
 if(EMSCRIPTEN)
     function(add_compile_and_link_options)
@@ -45,6 +51,9 @@ else()
     find_package(Threads)
     link_libraries(Threads::Threads)
 endif()
+
+# Disable thread local storage (needed for C++98 & iOS)
+add_compile_options(-DRAPIDJSON_NO_THREAD_LOCAL -DSTBI_NO_THREAD_LOCALS)
 
 # Android Logging
 if(ANDROID)

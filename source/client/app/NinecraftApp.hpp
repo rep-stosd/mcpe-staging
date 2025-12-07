@@ -20,16 +20,35 @@ public:
 	NinecraftApp();
 	virtual ~NinecraftApp();
 
+private:
+	void _initOptions();
+	void _initTextures();
+	void _initMaterials();
+	void _initInput();
+	void _updateStats();
+
+protected:
+	void _reloadTextures();
+	void _reloadFancy(bool isFancy);
+	void _reloadOptionalFeatures();
+	void _reloadPatchData();
+
+public:
 	bool handleBack(bool) override;
 	void init() override;
+	void setupRenderer();
 	void update() override;
-	void onGraphicsReset() override;
+	void onGraphicsReset();
 	void teardown();
-
-	void updateStats();
-	void initGLStates();
+	void teardownRenderer();
+	void reloadFancy(bool isFancy) override;
 
 	int getFpsIntlCounter() override;
+    
+    void onAppResumed() override;
+    void onAppFocusLost() override;
+    void onAppFocusGained() override;
+    void onAppSuspended() override;
 
 private:
 	int field_DBC;
