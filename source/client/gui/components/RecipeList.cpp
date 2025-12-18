@@ -66,11 +66,11 @@ void RecipeList::render(int mouseX, int mouseY, float f)
 	field_38 *= 0.75f;
 	capYPosition();
 
-	glDisable(GL_LIGHTING);
-	glDisable(GL_FOG);
+    //glDisable(GL_LIGHTING);
+	//glDisable(GL_FOG);
 
 	m_pMinecraft->m_pTextures->loadAndBindTexture("gui/spritesheet.png");
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	//glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
 	//renderScrollBackground();
 
@@ -83,8 +83,8 @@ void RecipeList::render(int mouseX, int mouseY, float f)
 	// Note, X/Y are the lower left's X/Y coordinates, not the upper left's.
 	int lowerY = Minecraft::height - int(field_10 / Gui::InvGuiScale);
 	int upperY = Minecraft::height - int(field_C  / Gui::InvGuiScale);
-	glScissor(0, 10/240.f*m_pMinecraft->height, Minecraft::width, Minecraft::height - (10/240.f*Minecraft::height)*2);
-	glEnable(GL_SCISSOR_TEST);
+	//glScissor(0, 10/240.f*m_pMinecraft->height, Minecraft::width, Minecraft::height - (10/240.f*Minecraft::height)*2);
+	//glEnable(GL_SCISSOR_TEST);
 
 	for (int i = 0; i < nItems; i++)
 	{
@@ -97,7 +97,7 @@ void RecipeList::render(int mouseX, int mouseY, float f)
 			continue;
 
         m_pMinecraft->m_pTextures->loadAndBindTexture("gui/spritesheet.png");
-		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	//	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         int thick = 10;
 		if (m_bRenderSelection && isSelectedItem(i))
 		{
@@ -114,13 +114,13 @@ void RecipeList::render(int mouseX, int mouseY, float f)
 		renderItem(i, itemX, int(itemY), 2*field_18+C_ITEM_WIDTH, t);
 	}
 	
-	glDisable(GL_SCISSOR_TEST);
-	glDisable(GL_DEPTH_TEST);
+//	glDisable(GL_SCISSOR_TEST);
+//	glDisable(GL_DEPTH_TEST);
 
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_DEPTH_TEST);
-	glShadeModel(GL_FLAT);
-	glEnable(GL_ALPHA_TEST);
-	glDisable(GL_BLEND);
+//	glEnable(GL_TEXTURE_2D);
+//	glEnable(GL_DEPTH_TEST);
+//	glShadeModel(GL_FLAT);
+//	glEnable(GL_ALPHA_TEST);
+//	glDisable(GL_BLEND);
 }
 
